@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/kosar-frontend/static/css/main.86e3fbce.css",
+    "main.js": "/kosar-frontend/static/js/main.88844f00.js",
+    "static/media/subang.png": "/kosar-frontend/static/media/subang.397f3f174291aad4367b.png",
+    "static/media/background.png": "/kosar-frontend/static/media/background.496e18aa4a57d7cd8ab0.png",
+    "index.html": "/kosar-frontend/index.html",
+    "main.86e3fbce.css.map": "/kosar-frontend/static/css/main.86e3fbce.css.map",
+    "main.88844f00.js.map": "/kosar-frontend/static/js/main.88844f00.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86e3fbce.css",
+    "static/js/main.88844f00.js"
+  ]
+}
