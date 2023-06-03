@@ -14,7 +14,7 @@ function AdminReportings() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/reporting");
+      const response = await axios.get("https://kosar-server.vercel.app/reporting");
       setReportings(response.data.data);
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ function AdminReportings() {
 
   const selesaireporting = (id, newStatus) => {
     axios
-      .put(`/u/rep?id=${id}`, { work_status: newStatus })
+      .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
       .then((response) => {
         console.log(response.data);
         const updatedList = reportings.map((report) => {
