@@ -21,7 +21,7 @@ function RegisterScreen() {
     };
 
     try {
-      const response = await axios.post("/c/emp", employee);
+      const response = await axios.post("https://kosar-server.vercel.app/c/emp", employee);
       console.log(response.data); // Menampilkan respon dari server
 
       // Lakukan tindakan sesuai dengan respon dari server
