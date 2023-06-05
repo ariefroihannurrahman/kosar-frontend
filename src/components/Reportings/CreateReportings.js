@@ -13,16 +13,16 @@ function CreateReporting() {
   async function addKeluhan() {
     const newreporting = {
       complainants_name,
-      complaint_category,
       complaint_title,
+      complaint_category,
       description,
       work_status: "Pending",
     };
 
     if (
       !complainants_name ||
-      !complaint_category ||
       !complaint_title ||
+      !complaint_category ||
       !description
     ) {
       Swal.fire("Oops", "Mohon isi semua inputan", "error");
@@ -31,7 +31,6 @@ function CreateReporting() {
 
     try {
       const result = await axios.post("https://kosar-server.vercel.app/c/rep", newreporting);
-
       console.log(result);
       Swal.fire("Okay", "Success Create Reporting", "success").then(
         (result) => {
