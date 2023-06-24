@@ -48,7 +48,7 @@ function FinishedReportings() {
   }
 
   const reportingsSelesai = reportings.filter(
-    (reporting) => reporting.work_status === "Selesai"
+    (reporting) => reporting.work_status === "Completed"
   );
 
   const sortedreportings = reportingsSelesai.sort((a, b) => b.vote - a.vote);
@@ -61,7 +61,7 @@ function FinishedReportings() {
           <input
             type="text"
             className="form-control"
-            placeholder="Cari"
+            placeholder="Search"
             value={searchkey}
             onChange={(e) => {
               setsearchkey(e.target.value);
@@ -78,7 +78,7 @@ function FinishedReportings() {
               filterByType(e.target.value);
             }}
           >
-            <option value="all">Pilih Kategori</option>
+            <option value="all">Select Category</option>
             <option value="Infrastruktur">Infrastruktur</option>
             <option value="Pelayanan Publik">Pelayan Publik</option>
             <option value="Keamanan dan Ketertiban">

@@ -11,7 +11,7 @@ function ModalReporting({ reporting, index }) {
   const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
-    const hasVotedBefore = localStorage.getItem(
+    const hasVotedBefore = sessionStorage.getItem(
       `voted-${reporting.complaint_id}`
     );
     if (hasVotedBefore) {
@@ -26,10 +26,9 @@ function ModalReporting({ reporting, index }) {
     axios
       .put(`https://kosar-server.vercel.app/u/rep/vote?id=${reporting.complaint_id}`, { vote: voteCount + 1 })
       .then((response) => {
-        // Update jumlah vote pada komponen
         setVoteCount(voteCount + 1);
         setHasVoted(true);
-        localStorage.setItem(`voted-${reporting.complaint_id}`, true);
+        sessionStorage.setItem(`voted-${reporting.complaint_id}`, true);
       })
       .catch((error) => {
         console.log(error);
@@ -41,15 +40,15 @@ function ModalReporting({ reporting, index }) {
   switch (reporting.work_status) {
     case "Pending":
       return null;
-    case "Diterima":
-      statusText = "Diproses";
-      statusClass = "status-diterima";
+    case "Accepted":
+      statusText = "Processed";
+      statusClass = "accepted-status";
       break;
-    case "Ditolak":
-      statusClass = "status-ditolak";
+    case "Rejected":
+      statusClass = "rejected-status";
       break;
-    case "Selesai":
-      statusClass = "status-selesai";
+    case "Completed":
+      statusClass = "completed-status";
       break;
     default:
       break;
@@ -63,7 +62,7 @@ function ModalReporting({ reporting, index }) {
             <Card.Title>
               {hasVoted ? (
                 <button className="btnvoteup">
-                  <BsTriangleFill className="sudahvote" size={30} />
+                  <BsTriangleFill className="vote_done" size={30} />
                 </button>
               ) : (
                 <button className="btnvoteup" onClick={handleVote}>

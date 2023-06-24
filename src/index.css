@@ -76,38 +76,73 @@ h1 {
   color: white;
 }
 
-.dashboard-box {
-  text-align: center;
-  display: inline-block;
-  width: 150px;
+.dashboard-box-incoming {
   height: 150px;
-  padding: 20px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  text-align: center;
   margin: 5px;
+  padding: 20px;
   color: white;
 }
-.angkas {
-  font-size: 25px;
+
+.dashboard-box-incoming p {
+  font-size: 16px;
   font-weight: bold;
 }
-.laporanmasuk {
+
+.dashboard-box-incoming .numbers {
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+.dashboard-box {
+  width: 190px;
+  height: 150px;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  margin-left: 15px;
+  padding: 20px;
+  color: white;
+}
+
+.dashboard-box p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dashboard-box .numbers {
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+.incoming_report {
   background-color: #02a0fc;
 }
 
-.laporanditerima {
+.reportings_accepted {
   background-color: #fec400;
 }
 
-.laporanditolak {
+.reportings_rejected {
   background-color: #f12b2c;
 }
 
-.laporanselesai {
+.reportings_completed {
   background-color: #14bd96;
 }
 
-.laporanpending {
+.reportings_pending {
   background-color: #696969;
 }
 
@@ -185,7 +220,7 @@ b {
   border: none;
 }
 
-.sudahvote {
+.vote_done {
   color: #14bd96;
   border: none;
 }
@@ -198,7 +233,7 @@ b {
   background-color: #f12b2c;
 }
 
-.judullogin {
+.login_title {
   color: #10bca0;
 }
 
@@ -211,8 +246,9 @@ b {
   margin-top: 20px;
 }
 
-.terimareporting,
-.tolakreporting {
+.btn_accepted,
+.btn_rejected,
+.btn-action {
   color: white;
   border: none;
   border-radius: 10px 15px 10px 20px;
@@ -221,11 +257,11 @@ b {
   margin-top: 2vh;
 }
 
-.terimareporting {
+.btn_accepted {
   background-color: #14bd96;
 }
 
-.tolakreporting {
+.btn_rejected {
   background-color: #f12b2c;
 }
 
@@ -238,14 +274,15 @@ b {
 /* home */
 
 .judul {
-  margin-top: 40px;
   font-weight: bold;
   color: white;
+  text-align: center;
 }
 
 .judul2 {
   color: white;
   font-size: 20px;
+  text-align: center;
 }
 
 .form-control {
@@ -305,20 +342,56 @@ b {
   margin-bottom: 15vh;
 }
 
-.status-pending {
-  color: #fec400;
+.homes {
+  margin-top: 5vh;
+  margin-bottom: 15vh;
 }
 
-.status-diterima {
-  color: #fec400;
+.pending-status {
+  color: #9932cc;
+  font-weight: bold;
 }
 
-.status-ditolak {
+.accepted-status {
+  color: #fec400;
+  font-weight: bold;
+}
+
+.rejected-status {
   color: #f12b2c;
+  font-weight: bold;
 }
 
-.status-selesai {
+.completed-status {
   color: #14bd96;
+  font-weight: bold;
+}
+
+.pending-status-prof {
+  background-color: #9932cc;
+}
+
+.accepted-status-prof {
+  background-color: #fec400;
+}
+
+.rejected-status-prof {
+  background-color: #f12b2c;
+}
+
+.completed-status-prof {
+  background-color: #14bd96;
+}
+
+.accepted-status-prof,
+.rejected-status-prof,
+.pending-status-prof,
+.completed-status-prof {
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
 .header {
@@ -362,4 +435,31 @@ b {
 .subjudul {
   color: white;
   margin-top: 10px;
+  text-align: center;
+}
+
+.bs {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 60px;
+  border-radius: 5px;
+  padding: 20px;
+  background: white;
+}
+
+.myprf {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.btn-action,
+.btn_accepted,
+.btn_rejected {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+
+.tabels {
+  text-align: center;
 }

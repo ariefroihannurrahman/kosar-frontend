@@ -32,44 +32,56 @@ function AdminReportings() {
     indexOfLastReporting
   );
 
-  const selesaireporting = (id, newStatus) => {
-    axios
-      .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
-      .then((response) => {
-        console.log(response.data);
-        const updatedList = reportings.map((report) => {
-          if (report.complaint_id === id) {
-            return { ...report, work_status: newStatus };
-          }
-          return report;
-        });
+  const completedReporting = (id, newStatus) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are marking this reporting as finished. Proceed?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Finish",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
+          .then((response) => {
+            console.log(response.data);
 
-        Swal.fire("Okay", "Reporting Finished", "success").then(
-          (updatedList) => {
-            window.location.reload();
-          }
-        );
-        setReportings(updatedList);
-      })
-      .catch((error) => {
-        console.error(error);
-        Swal.fire("Oops", "Something Went Wrong", "error");
-      });
+            const updatedList = reportings.map((report) => {
+              if (report.complaint_id === id) {
+                return { ...report, work_status: newStatus };
+              }
+              return report;
+            });
+
+            Swal.fire("Finished", "Reporting Finished", "success").then(() => {
+              window.location.reload();
+            });
+
+            setReportings(updatedList);
+          })
+          .catch((error) => {
+            console.error(error);
+            Swal.fire("Oops", "Something Went Wrong", "error");
+          });
+      }
+    });
   };
 
   return (
     <Row>
       <Col>
-        <h1>Semua Laporan</h1>
+        <h1>All Reportings</h1>
         <Table bordered>
           <thead>
             <tr>
               <th>No</th>
-              <th>Nama Warga</th>
-              <th>Judul Pengaduan</th>
-              <th>Alasan Ditolak</th>
+              <th>Villagers Name</th>
+              <th>Complaint Title</th>
+              <th>Reason Rejected</th>
               <th>Status</th>
-              <th>Aksi</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -79,15 +91,15 @@ function AdminReportings() {
               switch (reporting.work_status) {
                 case "Pending":
                   return null;
-                case "Diterima":
-                  statusText = "Diproses";
-                  statusClass = "status-diterima";
+                case "Accepted":
+                  statusText = "Processed";
+                  statusClass = "accepted-status";
                   break;
-                case "Ditolak":
-                  statusClass = "status-ditolak";
+                case "Rejected":
+                  statusClass = "rejected-status";
                   break;
-                case "Selesai":
-                  statusClass = "status-selesai";
+                case "Completed":
+                  statusClass = "completed-status";
                   break;
                 default:
                   break;
@@ -102,14 +114,19 @@ function AdminReportings() {
                   </td>
                   <td className={statusClass}>{statusText}</td>
                   <td>
-                    {reporting.work_status !== "Selesai" &&
-                      reporting.work_status !== "Ditolak" && (
+                    {reporting.work_status !== "Completed" &&
+                      reporting.work_status !== "Rejected" && (
                         <Button
+                          variant="info"
+                          className="btn-action"
                           onClick={() =>
-                            selesaireporting(reporting.complaint_id, "Selesai")
+                            completedReporting(
+                              reporting.complaint_id,
+                              "Completed"
+                            )
                           }
                         >
-                          Selesai
+                          Completed
                         </Button>
                       )}
                   </td>

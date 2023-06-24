@@ -3,14 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { LinearScale } from "chart.js";
+import { Container } from "react-bootstrap";
 
 function AdminDashboard() {
   const [reportings, setReportings] = useState([]);
-  const [totalreporting, setTotalReporting] = useState(0);
-  const [totalreportingDiterima, setTotalReportingDiterima] = useState(0);
-  const [totalreportingDitolak, setTotalReportingDitolak] = useState(0);
-  const [totalreportingPending, setTotalReportingPending] = useState(0);
-  const [totalreportingSelesai, setTotalReportingSelesai] = useState(0);
+  const [totalAmountReportings, setTotalAmountReportings] = useState(0);
+  const [totalAmountReportingsAccepted, setTotalAmountReportingsAccepted] =
+    useState(0);
+  const [totalAmountReportingsRejected, setTotalAmountReportingsRejected] =
+    useState(0);
+  const [totalAmountReportingsPending, setTotalAmountReportingsPending] =
+    useState(0);
+  const [totalAmountReportingsCompleted, setTotalAmountReportingsCompleted] =
+    useState(0);
 
   Chart.register(...registerables);
   Chart.register(LinearScale);
@@ -28,28 +33,28 @@ function AdminDashboard() {
         setReportings(data);
         console.log(data);
 
-        const totalReporting = data.length;
-        setTotalReporting(totalReporting);
+        const totalAmountReportings = data.length;
+        setTotalAmountReportings(totalAmountReportings);
 
-        const totalReportingDiterima = data.filter(
-          (reporting) => reporting.work_status === "Diterima"
+        const totalAmountReportingsAccepted = data.filter(
+          (reporting) => reporting.work_status === "Accepted"
         ).length;
-        setTotalReportingDiterima(totalReportingDiterima);
+        setTotalAmountReportingsAccepted(totalAmountReportingsAccepted);
 
-        const totalReportingSelesai = data.filter(
-          (reporting) => reporting.work_status === "Selesai"
+        const totalAmountReportingsCompleted = data.filter(
+          (reporting) => reporting.work_status === "Completed"
         ).length;
-        setTotalReportingSelesai(totalReportingSelesai);
+        setTotalAmountReportingsCompleted(totalAmountReportingsCompleted);
 
-        const totalReportingDitolak = data.filter(
-          (reporting) => reporting.work_status === "Ditolak"
+        const totalAmountReportingsRejected = data.filter(
+          (reporting) => reporting.work_status === "Rejected"
         ).length;
-        setTotalReportingDitolak(totalReportingDitolak);
+        setTotalAmountReportingsRejected(totalAmountReportingsRejected);
 
-        const totalReportingPending = data.filter(
+        const totalAmountReportingsPending = data.filter(
           (reporting) => reporting.work_status === "Pending"
         ).length;
-        setTotalReportingPending(totalReportingPending);
+        setTotalAmountReportingsPending(totalAmountReportingsPending);
       }
     } catch (error) {
       console.error(error);
@@ -57,49 +62,49 @@ function AdminDashboard() {
   };
   const chartData = {
     labels: [
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
       "Jan",
       "Feb",
       "Mar",
       "Apr",
       "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Okt",
-      "Nov",
-      "Des",
     ],
 
     datasets: [
       {
-        label: "Total Reporting",
+        label: "Total Amount Reportings",
         type: "bar",
-        data: [totalreporting],
+        data: [totalAmountReportings],
         backgroundColor: "#02a0fc",
         borderWidth: 1,
         borderRadius: 10,
       },
       {
-        label: "Proses",
+        label: "Process",
         type: "bar",
-        data: [totalreportingDiterima],
+        data: [totalAmountReportingsAccepted],
         backgroundColor: "#fec400",
         borderWidth: 1,
         borderRadius: 10,
       },
       {
-        label: "Selesai",
+        label: "Completed",
         type: "bar",
-        data: [totalreportingSelesai],
+        data: [totalAmountReportingsCompleted],
         backgroundColor: "#14bd96",
         borderWidth: 1,
         borderRadius: 10,
       },
       {
-        label: "Ditolak",
+        label: "Rejected",
         type: "bar",
-        data: [totalreportingDitolak],
+        data: [totalAmountReportingsRejected],
         backgroundColor: "#f12b2c",
         borderWidth: 1,
         borderRadius: 10,
@@ -107,7 +112,7 @@ function AdminDashboard() {
       {
         label: "Pending",
         type: "bar",
-        data: [totalreportingPending],
+        data: [totalAmountReportingsPending],
         backgroundColor: "#696969",
         borderWidth: 1,
         borderRadius: 10,
@@ -125,35 +130,35 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <Container className="dashboard-container">
       <h1>Dashboard</h1>
-      <div className="laporanmasuk dashboard-box">
-        <p> Masuk</p>
-        <p className="angkas">{totalreporting}</p>
+      <div className="incoming_report dashboard-box-incoming">
+        <p>Incoming Reports</p>
+        <p className="numbers">{totalAmountReportings}</p>
       </div>
-      <div className="laporanditerima dashboard-box">
-        <p>Diproses</p>
-        <p className="angkas">{totalreportingDiterima}</p>
+      <div className="reportings_accepted dashboard-box">
+        <p>Processed</p>
+        <p className="numbers">{totalAmountReportingsAccepted}</p>
       </div>
-      <div className="laporanselesai dashboard-box">
-        <p>Selesai</p>
-        <p className="angkas">{totalreportingSelesai}</p>
+      <div className="reportings_completed dashboard-box">
+        <p>Completed</p>
+        <p className="numbers">{totalAmountReportingsCompleted}</p>
       </div>
-      <div className="laporanditolak dashboard-box">
-        <p>Ditolak</p>
-        <p className="angkas">{totalreportingDitolak}</p>
+      <div className="reportings_rejected dashboard-box">
+        <p>Rejected</p>
+        <p className="numbers">{totalAmountReportingsRejected}</p>
       </div>
-      <div className="laporanpending dashboard-box">
+      <div className="reportings_pending dashboard-box">
         <p>Pending</p>
-        <p className="angkas">{totalreportingPending}</p>
+        <p className="numbers">{totalAmountReportingsPending}</p>
       </div>
       <div className="chart-container justify-content-center">
-        <h1>Statistik Laporan</h1>
+        <h1>Report Statistics</h1>
         <div>
           <Bar data={chartData} options={options} />
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

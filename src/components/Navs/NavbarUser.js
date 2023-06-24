@@ -6,44 +6,41 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/subang.png";
 import Swal from "sweetalert2";
 
-const NavbarPage = () => {
-  const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+const NavbarUser = () => {
+  const villageUsers = JSON.parse(sessionStorage.getItem("villagers"));
 
   function logout() {
     Swal.fire({
       title: "Logout",
-      text: "Apakah Anda yakin ingin keluar?",
+      text: "Are you sure you want to logout??",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Ya",
-      cancelButtonText: "Tidak",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        sessionStorage.removeItem("loggedInUser");
+        sessionStorage.removeItem("villagers");
         Swal.fire("Okay", "Logout Success", "success").then(() => {
-          window.location.href = "/login";
+          window.location.href = "/loguser";
         });
       }
     });
   }
-
   return (
-    <Navbar expand="lg">
+    <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/home">
+        <Navbar.Brand href="/">
           <img className="img-logo" src={logo} alt="" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto right">
-            {loggedInUser ? (
+            {villageUsers ? (
               <>
-                <NavDropdown
-                  title={<span style={{ color: "white" }}>Admin</span>}
-                  id="basic-nav-dropdown"
-                >
+                <Nav.Link href="/profile">Profile</Nav.Link>
+                <NavDropdown title={villageUsers.name} id="basic-nav-dropdown">
                   <NavDropdown.Item href="" onClick={logout}>
                     Logout
                   </NavDropdown.Item>
@@ -51,8 +48,8 @@ const NavbarPage = () => {
               </>
             ) : (
               <>
-                <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/reguser">Register</Nav.Link>
+                <Nav.Link href="/loguser">Login</Nav.Link>
               </>
             )}
           </Nav>
@@ -62,4 +59,4 @@ const NavbarPage = () => {
   );
 };
 
-export default NavbarPage;
+export default NavbarUser;

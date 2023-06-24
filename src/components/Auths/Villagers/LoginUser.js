@@ -5,73 +5,61 @@ import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-import logo from "../../assets/subang.png";
+import logo from "../../../assets/subang.png";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-function LoginScreen() {
-  const [username, setUsername] = useState("");
+function LoginUser() {
+  const [nik, setNik] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
-  const [showModal, setShowModal] = useState(true);
-
-  async function verifyCode() {
-    try {
-      const response = await axios.post("https://kosar-server.vercel.app/s/verify", { code });
-      console.log(response.data);
-
-      if (response.status === 200 && response.data.status === "Success") {
-        setShowModal(false);
-        Swal.fire("Success", "Code Verified", "success");
-      } else {
-        Swal.fire("Oops", "Invalid code", "error");
-      }
-    } catch (error) {
-      console.log(error);
-      Swal.fire("Oops", "Failed to verify code", "error");
-    }
-  }
 
   async function login() {
     const credentials = {
-      username,
+      nik,
       password,
     };
 
     try {
-      const response = await axios.post("https://kosar-server.vercel.app/l/emp", credentials);
-      console.log(response.data);
+      const response = await axios.post("https://kosar-server.vercel.app/user/log", credentials);
 
       if (response.status === 200) {
         if (response.data.status === "Success" && response.data.code === 200) {
-          const isAdmin = response.data.position;
+          const userData = {
+            user_id: response.data.user_id,
+            nik,
+            email: response.data.email,
+            name: response.data.name,
+            account_state: response.data.account_state,
+          };
 
-          if (isAdmin === "Admin") {
-            sessionStorage.setItem(
-              "loggedInUser",
-              JSON.stringify({ username, isAdmin })
-            );
+          sessionStorage.setItem("villagers", JSON.stringify(userData));
+          console.log(userData);
 
+          if (userData.account_state === "Verified") {
             Swal.fire("Success", "Login Successful", "success").then(
               (result) => {
-                window.location.href = "/admin";
+                window.location.href = "/home";
               }
             );
-          } else {
+          } else if (userData.account_state === "Unverified") {
             Swal.fire(
               "Oops",
-              "You are not an admin. You do not have permission to access this page.",
+              "You are not a resident of Kosar Village. You do not have permission to access this page..",
+              "error"
+            );
+          } else if (userData.account_state === "Pending") {
+            Swal.fire(
+              "Oops",
+              "Your account is pending approval. You do not have permission to access this page..",
               "warning"
             );
           }
         } else {
           Swal.fire("Oops", "Invalid credentials", "error");
-          console.log(response);
         }
       } else {
         Swal.fire("Oops", "Invalid credentials", "error");
-        console.log(response);
       }
     } catch (error) {
       Swal.fire("Oops", "Wrong Username and Password", "error");
@@ -99,13 +87,13 @@ function LoginScreen() {
                 <h1>Kosar Village</h1>
               </Card.Title>
               <Card.Text>
-                <h2 className="login_title">Login Admin</h2>
+                <h2 className="login_title">Login Villagers</h2>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="NIK"
+                  value={nik}
+                  onChange={(e) => setNik(e.target.value)}
                 />
                 <input
                   type="password"
@@ -118,7 +106,7 @@ function LoginScreen() {
                   Login
                 </button>
                 <div className="mt-2 text-center" style={{ color: "black" }}>
-                  <Link to="/register" className="">
+                  <Link to="/reguser" className="">
                     Register ? ...
                   </Link>
                 </div>
@@ -127,33 +115,8 @@ function LoginScreen() {
           </Card>
         </Col>
       </Row>
-
-      {/* Verification Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Verification Code</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Please enter the verification code:</p>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Verification Code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={verifyCode}>
-            Verify
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 }
 
-export default LoginScreen;
+export default LoginUser;

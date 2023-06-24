@@ -5,9 +5,10 @@ import AdminDashboard from "./AdminDashboard";
 import AdminReportings from "./AdminReportings";
 import AdminReport from "./AdminReport";
 import Swal from "sweetalert2";
+import AdminUser from "./AdminUser";
+import AdminAllUsers from "./AdminAllUsers";
 
 function AdminPanel() {
- 
   const [showAdminContent, setShowAdminContent] = useState(false);
 
   useEffect(() => {
@@ -25,6 +26,8 @@ function AdminPanel() {
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = "/login";
+        } else {
+          window.location.href = "/";
         }
       });
       return;
@@ -35,9 +38,9 @@ function AdminPanel() {
   return (
     <Container className="tampilanadmin">
       {showAdminContent && (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="laporan">
+        <Tab.Container id="left-tabs-example" defaultActiveKey="dashboard">
           <Row className="">
-            <Col sm={3}>
+            <Col sm={2}>
               <Nav variant="pills" className="flex-column">
                 <h2>
                   <b>Admin Panel</b>
@@ -46,11 +49,14 @@ function AdminPanel() {
                   <Nav.Link eventKey="dashboard">Dashboard</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="laporan">Laporan</Nav.Link>
+                  <Nav.Link eventKey="laporan">Reportings</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="villagers">Villagers</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col sm={9}>
+            <Col sm={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="dashboard">
                   <AdminDashboard />
@@ -58,6 +64,10 @@ function AdminPanel() {
                 <Tab.Pane eventKey="laporan">
                   <AdminReportings />
                   <AdminReport />
+                </Tab.Pane>
+                <Tab.Pane eventKey="villagers">
+                  <AdminAllUsers />
+                  <AdminUser />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

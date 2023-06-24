@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Table } from "react-bootstrap";
+import { Row, Col, Button, Table, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 function AdminReport() {
   const [reportings, setReportings] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [selectedReport, setSelectedReport] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -21,68 +22,95 @@ function AdminReport() {
     }
   };
 
-  const terimareporting = (id, newStatus) => {
-    axios
-      .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
-      .then((response) => {
-        console.log(response.data);
-
-        const updatedList = reportings.map((report) => {
-          if (report.complaint_id === id) {
-            return { ...report, work_status: newStatus };
-          }
-          return report;
-        });
-        Swal.fire("Okay", "Reporting Accepted", "success").then(
-          (updatedList) => {
-            window.location.reload();
-          }
-        );
-        setReportings(updatedList);
-      })
-      .catch((error) => {
-        console.error(error);
-        Swal.fire("Oops", "Something Went Wrong", "error");
-      });
-  };
-
-  const tolakreporting = (id, newStatus) => {
+  const acceptedReporting = (id, newStatus) => {
     Swal.fire({
-      title: "Alasan Penolakan",
-      input: "textarea",
-      inputPlaceholder: "Masukkan Alasan Penolakan",
+      title: "Are you sure?",
+      text: "You are accepting this reporting. Proceed?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Tolak",
-      cancelButtonText: "Batal",
-      showLoaderOnConfirm: true,
-      preConfirm: (reason) => {
-        return axios
-          .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus, reason: reason })
+      confirmButtonText: "Accept",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
           .then((response) => {
             console.log(response.data);
+
             const updatedList = reportings.map((report) => {
               if (report.complaint_id === id) {
                 return { ...report, work_status: newStatus };
               }
               return report;
             });
-            Swal.fire("Okay", "Reporting Rejected", "success").then(
-              (updatedList) => {
-                window.location.reload();
-              }
-            );
+
+            Swal.fire("Accepted", "Reporting Accepted", "success").then(() => {
+              window.location.reload();
+            });
+
             setReportings(updatedList);
           })
           .catch((error) => {
             console.error(error);
             Swal.fire("Oops", "Something Went Wrong", "error");
           });
+      }
+    });
+  };
+
+  const rejectedReporting = (id, newStatus) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are rejecting this reporting. Please provide a reason:",
+      input: "textarea",
+      icon: "warning",
+      inputPlaceholder: "Enter a Reason for Rejection",
+      showCancelButton: true,
+      confirmButtonText: "Reject",
+      cancelButtonText: "Cancel",
+      showLoaderOnConfirm: true,
+      reverseButtons: true,
+      preConfirm: (reason) => {
+        return new Promise((resolve) => {
+          axios
+            .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus, reason: reason })
+            .then((response) => {
+              console.log(response.data);
+              const updatedList = reportings.map((report) => {
+                if (report.complaint_id === id) {
+                  return { ...report, work_status: newStatus };
+                }
+                return report;
+              });
+              Swal.fire("Rejected", "Reporting Rejected", "success").then(
+                () => {
+                  window.location.reload();
+                }
+              );
+              setReportings(updatedList);
+              resolve();
+            })
+            .catch((error) => {
+              console.error(error);
+              Swal.fire("Oops", "Something Went Wrong", "error");
+              resolve();
+            });
+        });
       },
     });
   };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const openDescriptionModal = (report) => {
+    setSelectedReport(report);
+  };
+
+  const closeDescriptionModal = () => {
+    setSelectedReport(null);
   };
 
   const filteredReportings = reportings.filter(
@@ -98,19 +126,19 @@ function AdminReport() {
 
   return (
     <Row>
-      <Col md={12}>
-        <h1>Laporan Masuk</h1>
+      <Col>
+        <h1>Incoming Report</h1>
 
         <Table bordered>
           <thead>
             <tr>
               <th>No</th>
-              <th>Nama</th>
-              <th>Kategori Pengaduan</th>
-              <th>Judul Pengaduan</th>
-              <th>Isi Pengaduan</th>
-              <th>Tanggal</th>
-              <th>Aksi</th>
+              <th>Name</th>
+              <th>Complaint Category</th>
+              <th>Complaint Title</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -123,7 +151,20 @@ function AdminReport() {
                   <td>{reporting.complaint_category}</td>
                   <td>{reporting.complaint_title}</td>
                   <td style={{ width: "200px", wordBreak: "break-word" }}>
-                    {reporting.description}
+                    {reporting.description.length > 20 ? (
+                      <>
+                        {reporting.description.slice(0, 30)}...
+                        <Button
+                          variant="link"
+                          className="p-0 ml-1"
+                          onClick={() => openDescriptionModal(reporting)}
+                        >
+                          View Description
+                        </Button>
+                      </>
+                    ) : (
+                      reporting.description
+                    )}
                   </td>
 
                   <td>
@@ -136,23 +177,23 @@ function AdminReport() {
                   <td>
                     {reporting.work_status !== "pending" && (
                       <Button
-                        className="terimareporting"
+                        className="btn_accepted"
                         onClick={() =>
-                          terimareporting(reporting.complaint_id, "Diterima")
+                          acceptedReporting(reporting.complaint_id, "Accepted")
                         }
                       >
-                        Terima
+                        Accept
                       </Button>
                     )}
                     {reporting.work_status !== "pending" && (
                       <Button
                         variant="danger"
-                        className="tolakreporting"
+                        className="btn_rejected"
                         onClick={() =>
-                          tolakreporting(reporting.complaint_id, "Ditolak")
+                          rejectedReporting(reporting.complaint_id, "Rejected")
                         }
                       >
-                        Tolak
+                        Reject
                       </Button>
                     )}
                   </td>
@@ -160,7 +201,7 @@ function AdminReport() {
               ))
             ) : (
               <tr>
-                <td colSpan="8">Tidak ada laporan yang tersedia.</td>
+                <td colSpan="8">No reports available.</td>
               </tr>
             )}
           </tbody>
@@ -172,6 +213,20 @@ function AdminReport() {
           totalItems={filteredReportings.length}
           onPageChange={handlePageChange}
         />
+
+        <Modal show={selectedReport !== null} onHide={closeDescriptionModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Report Description</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedReport && selectedReport.description}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeDescriptionModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Col>
     </Row>
   );

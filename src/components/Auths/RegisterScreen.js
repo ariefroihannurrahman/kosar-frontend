@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import logo from "../../assets/subang.png";
 
 function RegisterScreen() {
   const [name, setName] = useState("");
@@ -22,14 +26,10 @@ function RegisterScreen() {
 
     try {
       const response = await axios.post("https://kosar-server.vercel.app/c/emp", employee);
-      console.log(response.data); // Menampilkan respon dari server
-
-      // Lakukan tindakan sesuai dengan respon dari server
+      console.log(response.data);
       if (response.status === 200) {
         Swal.fire("Congrats", "Employee Created Successfully", "success").then(
           (result) => {
-            // Lakukan tindakan lain setelah berhasil membuat karyawan...
-            // Contoh: Pindah ke halaman lain atau tampilkan notifikasi lainnya
             window.location.href = "/login";
           }
         );
@@ -42,74 +42,115 @@ function RegisterScreen() {
     }
   }
 
-  return (
-    <div>
-      <div className="row justify-content-center mt-5">
-        <div className="col-md-5 mt-5">
-          <div className="bs">
-            <h2>Register</h2>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="NIP"
-              value={nip}
-              onChange={(e) => {
-                setNIP(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Position"
-              value={position}
-              onChange={(e) => {
-                setPosition(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Status"
-              value={status}
-              onChange={(e) => {
-                setStatus(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+  const isFormValid = () => {
+    return (
+      name !== "" &&
+      nip !== "" &&
+      position !== "" &&
+      status !== "" &&
+      username !== "" &&
+      password !== ""
+    );
+  };
 
-            <button className="btn btn-primary mt-3" onClick={register}>
-              Register
-            </button>
-          </div>
+  
+
+  return (
+    <Container className="container">
+      <div className="header">
+        <div className="backbutton">
+          <Link to="/home">
+            <IoArrowBackOutline size={30} color="white" />
+          </Link>
         </div>
       </div>
-    </div>
+      <Row className="justify-content-center mt-5">
+        <Col className="col">
+          <Card className="cardmodal">
+            <Card.Body>
+              <Card.Title className="text-center">
+                <img className="img-logo" src={logo} alt="" />
+                <h2>Welcome to</h2>
+                <h1>Public Complaint Information System</h1>
+                <h1>Kosar Village</h1>
+              </Card.Title>
+              <Card.Text>
+                <h2>Admin</h2>
+                <Row>
+                  <Col>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="NIP"
+                      value={nip}
+                      onChange={(e) => {
+                        setNIP(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                    />
+
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Position"
+                      value={position}
+                      onChange={(e) => {
+                        setPosition(e.target.value);
+                      }}
+                    />
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Status"
+                      value={status}
+                      onChange={(e) => {
+                        setStatus(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
+                  </Col>
+                </Row>
+
+                <Button
+                  className="btn btn-primary mt-3"
+                  onClick={register}
+                  disabled={!isFormValid()}
+                >
+                  Register
+                </Button>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

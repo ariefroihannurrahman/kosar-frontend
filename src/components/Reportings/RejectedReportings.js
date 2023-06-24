@@ -48,7 +48,7 @@ function RejectedReportings() {
   }
 
   const reportingsDitolak = reportings.filter(
-    (reporting) => reporting.work_status === "Ditolak"
+    (reporting) => reporting.work_status === "Rejected"
   );
 
   const sortedreportings = reportingsDitolak.sort((a, b) => b.vote - a.vote);
@@ -61,7 +61,7 @@ function RejectedReportings() {
           <input
             type="text"
             className="form-control"
-            placeholder="Cari"
+            placeholder="Search"
             value={searchkey}
             onChange={(e) => {
               setsearchkey(e.target.value);
@@ -78,7 +78,7 @@ function RejectedReportings() {
               filterByType(e.target.value);
             }}
           >
-            <option value="all">Pilih Kategori</option>
+            <option value="all">Select Category</option>
             <option value="Infrastruktur">Infrastruktur</option>
             <option value="Pelayanan Publik">Pelayan Publik</option>
             <option value="Keamanan dan Ketertiban">

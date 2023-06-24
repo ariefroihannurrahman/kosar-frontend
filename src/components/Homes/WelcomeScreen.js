@@ -9,16 +9,16 @@ const WelcomeScreen = () => {
         <div className="logo-container">
           <img src={logo} alt="Logo" className="logo" />
         </div>
-        <h2>Selamat Datang di</h2>
-        <h1>Sistem Informasi Pengaduan Masyarakat </h1>
-        <h1>Desa Kosar</h1>
-        <h2 className="msk">Masuk Sebagai</h2>
+        <h2>Welcome To</h2>
+        <h1>Public Complaint Information System</h1>
+        <h1>Kosar Village</h1>
+        <h2 className="msk">Login as</h2>
         <div className="button-container">
           <Link to="/home" className="button">
-            Warga
+            Villagers
           </Link>
           <Link to="/admin" className="button">
-            Pemerintah Desa
+            Village Government
           </Link>
         </div>
       </div>

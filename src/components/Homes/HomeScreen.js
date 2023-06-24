@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { Tab, Container, Tabs } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LatestReportings from "../Reportings/LatestReportings";
 import AcceptedReportings from "../Reportings/AcceptedReportings";
@@ -8,42 +8,42 @@ import RejectedReportings from "../Reportings/RejectedReportings";
 
 function HomeScreen() {
   return (
-    <div className="inic container">
-      <h1 className="judul">Selamat Datang</h1>
+    <Container className="homes">
+      <h1 className="judul">Welcome to</h1>
       <h2 className="judul2">
-        Di Sistem Informasi Pengaduan <br></br>Masyarakat Desa Kosar
+        Public Complaint Information System <br></br> Kosar Village
       </h2>
 
-      <div className="tampilanhome">
+      <Container className="tampilanhome">
         <h2 className="text-center">
-          <b>Daftar Pengaduan</b>
+          <b>Complaint List</b>
         </h2>
         <Tabs
-          defaultActiveKey="reportingterbaru"
+          defaultActiveKey="latestreporting"
           id="justify-tab-example"
           className="mb-3"
           justify
         >
-          <Tab eventKey="reportingterbaru" title="Terbaru">
+          <Tab eventKey="latestreporting" title="Latest">
             <LatestReportings />
           </Tab>
-          <Tab eventKey="reportingdiproses" title="Diproses">
+          <Tab eventKey="processedreporting" title="Processed">
             <AcceptedReportings />
           </Tab>
-          <Tab eventKey="reportingselesai" title="Selesai">
+          <Tab eventKey="completedreporting" title="Resolved">
             <FinishedReportings />
           </Tab>
-          <Tab eventKey="reportingditolak" title="Ditolak">
+          <Tab eventKey="rejectedreporting" title="Rejected">
             <RejectedReportings />
           </Tab>
         </Tabs>
         <div className="fixed-bottom w-50 m-auto">
           <Link to="/tambahkeluhan" className="btn pengaduan btn-block">
-            Buat Pengaduan
+            Create Reporting
           </Link>
         </div>
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 

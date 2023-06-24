@@ -10,6 +10,10 @@ import AdminPanel from "./components/Admins/AdminPanel";
 import CreateReporting from "./components/Reportings/CreateReportings";
 import DetailsReporting from "./components/Reportings/DetailsReportings";
 import Welcome from "./components/Homes/WelcomeScreen";
+import RegisterUser from "./components/Auths/Villagers/RegisterUser";
+import LoginUser from "./components/Auths/Villagers/LoginUser";
+import NavbarUser from "./components/Navs/NavbarUser";
+import ProfileScreen from "./components/Homes/ProfileScreen";
 
 function App() {
   return (
@@ -17,10 +21,21 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<Welcome />} />
-          <Route path="/home" element={<HomeScreen />} />
+          <Route
+            path="/home"
+            element={
+              <>
+                <NavbarUser />
+                <HomeScreen />
+              </>
+            }
+          />
+          <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/tambahkeluhan" element={<CreateReporting />} />
           <Route path="/register" element={<RegisterScreen />} />
           <Route path="/login" element={<LoginScreen />} />
+          <Route path="/reguser" element={<RegisterUser />} />
+          <Route path="/loguser" element={<LoginUser />} />
 
           <Route
             path="/admin"
