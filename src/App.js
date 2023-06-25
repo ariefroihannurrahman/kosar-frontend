@@ -14,6 +14,7 @@ import RegisterUser from "./components/Auths/Villagers/RegisterUser";
 import LoginUser from "./components/Auths/Villagers/LoginUser";
 import NavbarUser from "./components/Navs/NavbarUser";
 import ProfileScreen from "./components/Homes/ProfileScreen";
+import ProfileVillageScreen from "./components/Homes/ProfileVillageScreen";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               </>
             }
           />
+          <Route path="/profilevillage" element={<ProfileVillageScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/tambahkeluhan" element={<CreateReporting />} />
           <Route path="/register" element={<RegisterScreen />} />

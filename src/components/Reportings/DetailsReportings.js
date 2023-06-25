@@ -12,7 +12,7 @@ function DetailsReporting({ match }) {
   useEffect(() => {
     const fetchreportingsByID = async () => {
       try {
-        const response = await axios.get(`https://kosar-server.vercel.app/reporting?id=${complaint_id}`);
+        const response = await axios.get(`/reporting?id=${complaint_id}`);
         const data = response.data.data[0];
         setReportings(data);
         console.log(data);
@@ -114,7 +114,7 @@ function DetailsReporting({ match }) {
             <h1 className="text-center">Detail</h1>
             <br></br>
             <p className="text-center">{reportings.description}</p>
-            {reportings.work_status === "Ditolak" && (
+            {reportings.work_status === "Rejected" && (
               <>
                 <Button
                   onClick={handleModal}

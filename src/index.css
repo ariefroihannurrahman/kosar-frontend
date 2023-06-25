@@ -463,3 +463,179 @@ b {
 .tabels {
   text-align: center;
 }
+
+/* profile desa */
+
+.container-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250vh;
+}
+
+.profile-village {
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Gaya untuk gambar desa */
+.village-image-container-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.village-image {
+  max-width: 20%;
+  height: auto;
+}
+
+.village-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-left: 20px;
+}
+
+/* Gaya untuk info desa */
+.village-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.village-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.village-description {
+  font-size: 16px;
+}
+
+/* Gaya untuk statistik desa */
+.village-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.stat {
+  flex-basis: 33.33%;
+  text-align: center;
+}
+
+.stat-label {
+  font-weight: bold;
+}
+
+/* Gaya untuk setiap bagian desa */
+.village-details-section {
+  margin-bottom: 20px;
+}
+
+.section-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section-content {
+  font-size: 16px;
+}
+
+.section-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Gaya untuk tombol */
+
+.button-container-prof {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.section-list-item {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+.footer {
+  background-color: #f0f0f0;
+  color: #777;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #777;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #333;
+}
+
+/* Reset default styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .profile-village {
+    max-width: 100%;
+  }
+
+  .village-image {
+    max-width: 100%;
+  }
+
+  .village-details {
+    margin-left: 0;
+  }
+
+  .village-details-section {
+    margin-bottom: 10px;
+  }
+
+  .section-list {
+    column-count: 1;
+  }
+}
+
+.kosarmaps {
+  max-width: 40%;
+  height: auto;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

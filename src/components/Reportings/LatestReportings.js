@@ -12,7 +12,7 @@ function LatestReportings() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get("https://kosar-server.vercel.app/reporting");
+        const response = await axios.get("/reporting");
         const data = response.data.data;
         setReportings(data);
         setDuplicateReportings(data);
@@ -24,14 +24,19 @@ function LatestReportings() {
   }, []);
 
   function filterBySearch() {
-    const tempreportings = duplicateReportings.filter((reporting) =>
-      reporting.complainants_name
-        .toLowerCase()
-        .includes(searchkey.toLowerCase())
+    const tempreportings = duplicateReportings.filter(
+      (reporting) =>
+        reporting.complaint_title
+          .toLowerCase()
+          .includes(searchkey.toLowerCase()) ||
+        reporting.complainants_name
+          .toLowerCase()
+          .includes(searchkey.toLowerCase())
     );
 
     setReportings(tempreportings);
   }
+
 
   function filterByType(e) {
     setcomplaint_category(e);

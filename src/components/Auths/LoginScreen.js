@@ -18,7 +18,7 @@ function LoginScreen() {
 
   async function verifyCode() {
     try {
-      const response = await axios.post("https://kosar-server.vercel.app/s/verify", { code });
+      const response = await axios.post("/s/verify", { code });
       console.log(response.data);
 
       if (response.status === 200 && response.data.status === "Success") {
@@ -40,7 +40,7 @@ function LoginScreen() {
     };
 
     try {
-      const response = await axios.post("https://kosar-server.vercel.app/l/emp", credentials);
+      const response = await axios.post("/l/emp", credentials);
       console.log(response.data);
 
       if (response.status === 200) {
@@ -136,7 +136,7 @@ function LoginScreen() {
         <Modal.Body>
           <p>Please enter the verification code:</p>
           <input
-            type="password"
+            type="text"
             className="form-control"
             placeholder="Verification Code"
             value={code}

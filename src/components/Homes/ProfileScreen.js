@@ -113,7 +113,7 @@ export function MyReportings() {
 
   const fetchReportingData = async () => {
     try {
-      const response = await axios.get("https://kosar-server.vercel.app/reporting/byUserId", {
+      const response = await axios.get("/reporting/byUserId", {
         params: {
           userId: userId,
         },

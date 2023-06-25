@@ -15,7 +15,7 @@ function AdminReport() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://kosar-server.vercel.app/reporting");
+      const response = await axios.get("/reporting");
       setReportings(response.data.data);
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ function AdminReport() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus })
+          .put(`/u/rep?id=${id}`, { work_status: newStatus })
           .then((response) => {
             console.log(response.data);
 
@@ -74,7 +74,7 @@ function AdminReport() {
       preConfirm: (reason) => {
         return new Promise((resolve) => {
           axios
-            .put(`https://kosar-server.vercel.app/u/rep?id=${id}`, { work_status: newStatus, reason: reason })
+            .put(`/u/rep?id=${id}`, { work_status: newStatus, reason: reason })
             .then((response) => {
               console.log(response.data);
               const updatedList = reportings.map((report) => {

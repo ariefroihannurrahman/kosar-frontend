@@ -16,7 +16,7 @@ function CreateReporting() {
       Swal.fire({
         title: "Oops",
         text: "You are not logged in. Please log in to make a reportings",
-        icon: "warning",
+        icon: "info",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
@@ -59,7 +59,7 @@ function CreateReporting() {
     }
 
     try {
-      const result = await axios.post("https://kosar-server.vercel.app/c/rep", {
+      const result = await axios.post("/c/rep", {
         ...newreporting,
         user_id: userId,
       });

@@ -17,9 +17,14 @@ const WelcomeScreen = () => {
           <Link to="/home" className="button">
             Villagers
           </Link>
+
           <Link to="/admin" className="button">
             Village Government
           </Link>
+        </div>
+        <div className="profile">
+          Do you want to see the profile of this village?
+          <Link to="/profilevillage"> Village Profile</Link>
         </div>
       </div>
     </div>

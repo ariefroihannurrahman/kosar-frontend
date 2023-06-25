@@ -17,7 +17,7 @@ function AdminPanel() {
       Swal.fire({
         title: "Oops",
         text: "You are not logged in. Please log in to view this page.",
-        icon: "warning",
+        icon: "info",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",

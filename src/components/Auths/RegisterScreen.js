@@ -25,7 +25,7 @@ function RegisterScreen() {
     };
 
     try {
-      const response = await axios.post("https://kosar-server.vercel.app/c/emp", employee);
+      const response = await axios.post("/c/emp", employee);
       console.log(response.data);
       if (response.status === 200) {
         Swal.fire("Congrats", "Employee Created Successfully", "success").then(

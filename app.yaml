@@ -1,2 +1,2 @@
-runtime: default
+runtime: nodejs20
 service: frontend
