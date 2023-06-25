@@ -12,7 +12,7 @@ function AcceptedReportings() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get("/reporting");
+        const response = await axios.get("https://kosar-server.vercel.app/reporting");
         const data = response.data.data;
         setReportings(data);
         setDuplicateReportings(data);

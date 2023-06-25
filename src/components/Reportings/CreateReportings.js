@@ -59,7 +59,7 @@ function CreateReporting() {
     }
 
     try {
-      const result = await axios.post("/c/rep", {
+      const result = await axios.post("https://kosar-server.vercel.app/c/rep", {
         ...newreporting,
         user_id: userId,
       });

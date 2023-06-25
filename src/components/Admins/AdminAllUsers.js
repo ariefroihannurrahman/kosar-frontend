@@ -14,7 +14,7 @@ function AdminAllUsers() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/user");
+      const response = await axios.get("https://kosar-server.vercel.app/user");
       setUsers(response.data.data);
     } catch (error) {
       console.log(error);

@@ -12,7 +12,7 @@ function DetailsReporting({ match }) {
   useEffect(() => {
     const fetchreportingsByID = async () => {
       try {
-        const response = await axios.get(`/reporting?id=${complaint_id}`);
+        const response = await axios.get(`https://kosar-server.vercel.app/reporting?id=${complaint_id}`);
         const data = response.data.data[0];
         setReportings(data);
         console.log(data);
