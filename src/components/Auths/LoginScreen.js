@@ -136,7 +136,7 @@ function LoginScreen() {
         <Modal.Body>
           <p>Please enter the verification code:</p>
           <input
-            type="text"
+            type="password"
             className="form-control"
             placeholder="Verification Code"
             value={code}
